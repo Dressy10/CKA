@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2024-11-12T11:42:12Z"
+  labels:
+    run: redis
+    tier: frontend
+    type: app1
+  name: dressy
+  namespace: default
+  resourceVersion: "788730"
+  uid: 850fffe6-92a2-455b-b2b8-d16eafa9e2bc
+spec:
+  containers:
+    - image: redis
+      name: redis
+  nodeName: preye-control-plane
+
+  

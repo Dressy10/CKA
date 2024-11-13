@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2024-11-13T08:12:32Z"
+  labels:
+    run: taiwo
+  name: taiwo
+  namespace: default
+  resourceVersion: "864892"
+  uid: 3de376ac-bd64-4632-b767-6ef5a2d357e7
+spec:
+  containers:
+  - image: redis
+    imagePullPolicy: Always
+    name: taiwo
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-c7qlk
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - key: "gpu"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
+  volumes:
+  - name: kube-api-access-c7qlk
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  phase: Pending
+  qosClass: BestEffort
